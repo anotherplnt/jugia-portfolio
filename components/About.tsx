@@ -3,7 +3,6 @@ const badges = [
   "Full Stack",
   "System Design",
   "DevOps",
-  "AI Integration",
   "Automation",
   "API Design",
   "Cloud",
@@ -83,11 +82,11 @@ export default function About() {
                 thinking, and a deep respect for users.
               </p>
               <p>
-                Over the years, I've moved across the stack — from frontend
-                interfaces to backend services, infrastructure, and AI-driven
-                features. I build complete products, not isolated components.
-                That means owning architecture, data models, APIs, deployment
-                pipelines, and the user experience end-to-end.
+                Over the years, I&apos;ve moved across the stack — from frontend
+                interfaces to backend services and infrastructure. I build
+                complete products, not isolated components. That means owning
+                architecture, data models, APIs, deployment pipelines, and the
+                user experience end-to-end.
               </p>
               <p>
                 My focus is execution. I ship maintainable systems that survive
@@ -95,10 +94,9 @@ export default function About() {
                 reliability, and shipping velocity over framework trends.
               </p>
               <p>
-                Whether it's a greenfield SaaS product, a backend overhaul, or
-                integrating LLMs into an existing workflow, I treat each
-                project as a system to design — measured by outcomes, not
-                output.
+                Whether it&apos;s a greenfield SaaS product, a backend overhaul,
+                or modernizing an existing workflow, I treat each project as a
+                system to design — measured by outcomes, not output.
               </p>
             </div>
           </div>

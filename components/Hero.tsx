@@ -5,8 +5,8 @@ const highlights = [
   "Full Stack Development",
   "Backend Architecture",
   "Automation Systems",
-  "AI Integrations",
-  "Cloud Deployment",
+  "Cloud Infrastructure",
+  "API Design",
 ];
 
 export default function Hero() {
@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs text-zinc-400 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Available for new projects
+            Open to opportunities
           </div>
 
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-tight text-zinc-100 leading-[1.05]">
@@ -33,8 +33,8 @@ export default function Hero() {
           </p>
 
           <p className="mt-6 text-lg text-zinc-400 leading-relaxed max-w-2xl">
-            Building modern web applications, backend systems, automation
-            workflows, and AI-powered features from idea to deployment.
+            Building modern web applications, backend systems, and automation
+            workflows from idea to deployment.
           </p>
 
           <p className="mt-4 text-base text-zinc-500 leading-relaxed max-w-2xl">

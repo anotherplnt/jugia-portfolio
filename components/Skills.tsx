@@ -43,9 +43,9 @@ const categories: SkillCategory[] = [
     ),
   },
   {
-    title: "Automation & AI",
-    description: "Building intelligent workflows and generative AI pipelines.",
-    skills: ["OpenAI", "Claude", "LangChain", "n8n", "ComfyUI", "Stable Diffusion"],
+    title: "Automation & Integrations",
+    description: "Connecting tools and services into reliable, automated workflows.",
+    skills: ["n8n", "OpenAI", "Claude", "LangChain", "REST APIs", "Webhooks"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <rect x="5" y="7" width="14" height="12" rx="2" />
@@ -93,8 +93,8 @@ export default function Skills() {
           A toolkit built for shipping
         </h2>
         <p className="mt-4 text-base leading-relaxed text-neutral-400">
-          From pixel-perfect frontends to resilient backends and AI-driven automation —
-          here&apos;s what I work with day to day.
+          From pixel-perfect frontends to resilient backends and reliable
+          infrastructure — here&apos;s what I work with day to day.
         </p>
       </motion.div>
 
