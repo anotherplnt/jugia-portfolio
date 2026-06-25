@@ -68,6 +68,33 @@ body {
   }
 }
 
+/* Scroll reveal — pure CSS, zero JS.
+   Default = fully visible. Only browsers that support scroll-driven
+   animations get the fade-up; everyone else just sees content (no blank). */
+.reveal {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    opacity: 0;
+    animation: reveal-fade-up linear forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+}
+
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -76,5 +103,10 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  /* reduced motion: force visible, no animation */
+  .reveal {
+    opacity: 1 !important;
+    animation: none !important;
   }
 }
