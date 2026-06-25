@@ -24,6 +24,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -64,25 +76,27 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-zinc-300 hover:text-zinc-100 transition-colors"
+            className="md:hidden relative z-60 p-2 text-zinc-300 hover:text-zinc-100 transition-colors"
             aria-label="Toggle menu"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
+      </nav>
 
+      {/* Full-screen mobile menu overlay */}
+      {open && (
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            open ? "max-h-96 pb-4" : "max-h-0"
-          }`}
+          className="md:hidden fixed inset-0 top-16 z-40 bg-ink/98 backdrop-blur-xl flex flex-col"
+          onClick={() => setOpen(false)}
         >
-          <div className="flex flex-col gap-1 pt-2 border-t border-border/40 bg-ink/95 backdrop-blur-xl -mx-6 px-6 pb-2">
+          <nav className="mx-auto w-full max-w-6xl px-6 lg:px-8 py-8 flex flex-col gap-1">
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="px-3 py-2.5 text-sm text-zinc-400 hover:text-zinc-100 transition-colors"
+                className="px-3 py-3.5 text-lg text-zinc-300 hover:text-white transition-colors border-b border-border/20"
               >
                 {l.label}
               </Link>
@@ -90,13 +104,13 @@ export default function Navbar() {
             <Link
               href="#contact"
               onClick={() => setOpen(false)}
-              className="mt-2 text-sm px-3 py-2.5 rounded-md bg-zinc-100 text-ink text-center font-medium"
+              className="mt-6 text-sm px-5 py-3 rounded-lg bg-zinc-100 text-ink text-center font-medium"
             >
               Let's talk
             </Link>
-          </div>
+          </nav>
         </div>
-      </nav>
+      )}
     </header>
   );
 }
