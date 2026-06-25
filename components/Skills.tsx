@@ -83,8 +83,7 @@ export default function Skills() {
     <section id="skills" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="max-w-2xl"
       >
@@ -101,8 +100,7 @@ export default function Skills() {
       <motion.div
         variants={container}
         initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-60px" }}
+        animate="show"
         className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
         {categories.map((cat) => (

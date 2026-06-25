@@ -55,8 +55,7 @@ export default function Process() {
     <section id="process" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="max-w-2xl"
       >
@@ -79,8 +78,7 @@ export default function Process() {
               custom={i}
               variants={item}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
+              animate="show"
               className="relative"
             >
               <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface font-mono text-sm font-medium text-accent">
@@ -103,8 +101,7 @@ export default function Process() {
               custom={i}
               variants={item}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-40px" }}
+              animate="show"
               className="relative flex gap-5"
             >
               <div className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-line bg-surface font-mono text-sm font-medium text-accent">
