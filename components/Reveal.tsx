@@ -1,39 +1,53 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
 
 export default function Reveal({
   children,
-  className,
+  className = "",
   delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [forced, setForced] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
 
-  // ponytail: fallback — if inView never fires (hydration race / above-fold),
-  // force-show after 700ms so content can NEVER stay stuck at opacity:0 in prod.
   useEffect(() => {
-    const t = setTimeout(() => setForced(true), 700);
-    return () => clearTimeout(t);
+    const el = ref.current;
+    if (!el) return;
+    // ponytail: IntersectionObserver + CSS transition. No framer-motion =
+    // no SSR opacity:0, no React19 hydration crash. Fallback: if IO is
+    // missing, show immediately so content can never stay hidden.
+    if (typeof IntersectionObserver === "undefined") {
+      setShown(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "-80px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
-  const show = inView || forced;
-
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 26 }}
-      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : "translateY(26px)",
+        transition: `opacity 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
