@@ -76,7 +76,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden relative z-[60] p-2 text-zinc-300 hover:text-zinc-100 transition-colors"
+            className="md:hidden relative z-60 p-2 text-zinc-300 hover:text-zinc-100 transition-colors"
             aria-label="Toggle menu"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -87,7 +87,7 @@ export default function Navbar() {
       {/* Full-screen mobile menu overlay */}
       {open && (
         <div
-          className="md:hidden fixed inset-0 top-16 z-40 bg-ink/[0.98] backdrop-blur-xl flex flex-col"
+          className="md:hidden fixed inset-0 top-16 z-40 bg-ink/98 backdrop-blur-xl flex flex-col"
           onClick={() => setOpen(false)}
         >
           <nav className="mx-auto w-full max-w-6xl px-6 lg:px-8 py-8 flex flex-col gap-1">
