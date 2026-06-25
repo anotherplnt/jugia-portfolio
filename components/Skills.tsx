@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 type SkillCategory = {
   title: string;
   description: string;
@@ -66,27 +62,10 @@ const categories: SkillCategory[] = [
   },
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-};
-
 export default function Skills() {
   return (
     <section id="skills" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl"
-      >
+      <div className="max-w-2xl">
         <p className="text-sm font-medium uppercase tracking-widest text-accent">My Skills</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           A toolkit built for shipping
@@ -95,18 +74,12 @@ export default function Skills() {
           From pixel-perfect frontends to resilient backends and reliable
           infrastructure — here&apos;s what I work with day to day.
         </p>
-      </motion.div>
+      </div>
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-      >
+      <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((cat) => (
-          <motion.div
+          <div
             key={cat.title}
-            variants={item}
             className="group rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-neutral-700"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-ink text-accent transition-colors group-hover:border-accent/40">
@@ -124,9 +97,9 @@ export default function Skills() {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }

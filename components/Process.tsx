@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 type Step = {
   number: string;
   title: string;
@@ -41,24 +37,10 @@ const steps: Step[] = [
   },
 ];
 
-const item = {
-  hidden: { opacity: 0, y: 18 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
 export default function Process() {
   return (
     <section id="process" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl"
-      >
+      <div className="max-w-2xl">
         <p className="text-sm font-medium uppercase tracking-widest text-accent">Process</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           How I build products
@@ -66,27 +48,20 @@ export default function Process() {
         <p className="mt-4 text-base leading-relaxed text-neutral-400">
           A repeatable, disciplined workflow that takes ideas from concept to production.
         </p>
-      </motion.div>
+      </div>
 
       {/* Desktop horizontal timeline */}
       <div className="relative mt-16 hidden lg:block">
         <div className="absolute left-0 right-0 top-5 h-px bg-line" />
         <div className="grid grid-cols-6 gap-6">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              custom={i}
-              variants={item}
-              initial="hidden"
-              animate="show"
-              className="relative"
-            >
+          {steps.map((step) => (
+            <div key={step.number} className="relative">
               <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface font-mono text-sm font-medium text-accent">
                 {step.number}
               </div>
               <h3 className="mt-5 text-base font-semibold text-white">{step.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-neutral-400">{step.description}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -95,15 +70,8 @@ export default function Process() {
       <div className="relative mt-12 lg:hidden">
         <div className="absolute bottom-2 left-5 top-2 w-px bg-line" />
         <div className="space-y-8">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              custom={i}
-              variants={item}
-              initial="hidden"
-              animate="show"
-              className="relative flex gap-5"
-            >
+          {steps.map((step) => (
+            <div key={step.number} className="relative flex gap-5">
               <div className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-line bg-surface font-mono text-sm font-medium text-accent">
                 {step.number}
               </div>
@@ -111,7 +79,7 @@ export default function Process() {
                 <h3 className="text-base font-semibold text-white">{step.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">{step.description}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

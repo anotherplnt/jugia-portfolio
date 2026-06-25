@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 const techStack = ["Next.js", "TypeScript", "TailwindCSS", "Supabase", "OpenAI API", "Vercel"];
 
@@ -16,24 +13,14 @@ const features = [
 export default function Projects() {
   return (
     <section id="work" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl"
-      >
+      <div className="max-w-2xl">
         <p className="text-sm font-medium uppercase tracking-widest text-accent">Featured Work</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Built to ship, designed to scale
         </h2>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-5 lg:items-center"
-      >
+      <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-5 lg:items-center">
         {/* LEFT — info */}
         <div className="lg:col-span-3">
           <h3 className="text-2xl font-semibold tracking-tight text-white">AGW Lens</h3>
@@ -129,7 +116,7 @@ export default function Projects() {
             />
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <p className="mt-12 text-sm text-neutral-500">
         More projects coming soon —{" "}
