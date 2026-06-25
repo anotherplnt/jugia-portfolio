@@ -16,18 +16,20 @@ const display = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://agw-lens.xyz"),
-  title: "Jugia Jabar — AI Builder & Full Stack Developer",
+  metadataBase: new URL("https://zulla.site"),
+  title: "Jugia Jabar — Full Stack Developer",
   description:
-    "Jugia Jabar builds AI-powered products, automation systems, and scalable web applications. Former QA engineer turned full stack developer and AI builder.",
+    "Full Stack Developer building modern web applications, backend systems, automation workflows, and AI-powered features. From idea to deployment.",
   keywords: [
     "Jugia Jabar",
-    "AI Builder",
     "Full Stack Developer",
-    "Automation",
+    "Web Developer",
+    "Backend Developer",
     "Next.js",
-    "AGW Lens",
-    "Web3",
+    "React",
+    "Node.js",
+    "Automation",
+    "API Development",
   ],
   authors: [{ name: "Jugia Jabar" }],
   openGraph: {
