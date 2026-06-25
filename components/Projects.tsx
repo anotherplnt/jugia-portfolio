@@ -128,80 +128,59 @@ export default function Projects() {
                   </a>
                 </div>
 
-                {/* Right visual */}
+                {/* Right visual — real AGW Lens dashboard screenshot */}
                 <div className="lg:col-span-2">
-                  <div className="relative aspect-[4/5] rounded-xl border border-border bg-gradient-to-br from-surface to-[#0A0A0B] overflow-hidden">
-                    {/* Decorative grid */}
-                    <div
-                      className="absolute inset-0 opacity-30"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-                        backgroundSize: "32px 32px",
-                      }}
-                      aria-hidden="true"
-                    />
-
+                  <motion.a
+                    href="https://agw-lens.xyz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative block aspect-[4/5] rounded-xl border border-border bg-gradient-to-br from-surface to-[#0A0A0B] overflow-hidden group/visual hover:border-accent/40 transition-colors duration-300"
+                    whileHover={{ y: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    aria-label="View AGW Lens dashboard live"
+                  >
                     {/* Glow */}
                     <div
-                      className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent/20 blur-3xl"
+                      className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent/20 blur-3xl opacity-60 group-hover/visual:opacity-100 transition-opacity duration-500"
                       aria-hidden="true"
                     />
 
-                    {/* Mock UI */}
-                    <div className="relative h-full flex flex-col p-6">
-                      <div className="flex items-center gap-1.5 mb-6">
-                        <div className="w-2.5 h-2.5 rounded-full bg-text-secondary/30" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-text-secondary/30" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-text-secondary/30" />
-                      </div>
-
-                      <div className="flex-1 space-y-4">
-                        <div className="space-y-2">
-                          <div className="h-2 w-2/3 rounded bg-accent/40" />
-                          <div className="h-2 w-1/2 rounded bg-text-secondary/20" />
-                        </div>
-
-                        <motion.div
-                          className="p-3 rounded-lg border border-border bg-surface/60"
-                          animate={{ y: [0, -4, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="h-2 w-16 rounded bg-text-secondary/30" />
-                            <div className="h-2 w-8 rounded bg-accent/60" />
-                          </div>
-                          <div className="flex items-end gap-1.5 h-12">
-                            {[40, 65, 30, 80, 55, 70, 90].map((h, i) => (
-                              <motion.div
-                                key={i}
-                                className="flex-1 rounded-sm bg-gradient-to-t from-accent/60 to-accent/20"
-                                initial={{ height: 0 }}
-                                whileInView={{ height: `${h}%` }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.08, duration: 0.6 }}
-                              />
-                            ))}
-                          </div>
-                        </motion.div>
-
-                        <div className="space-y-1.5">
-                          <div className="h-1.5 w-full rounded bg-text-secondary/15" />
-                          <div className="h-1.5 w-4/5 rounded bg-text-secondary/15" />
-                          <div className="h-1.5 w-3/5 rounded bg-text-secondary/15" />
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                        <span className="text-[10px] font-mono text-text-secondary uppercase tracking-wider">
-                          AGW Lens
-                        </span>
-                        <span className="text-[10px] font-mono text-accent">
-                          Live
-                        </span>
+                    {/* Real dashboard screenshot */}
+                    <div className="relative h-full w-full p-3">
+                      <div className="relative h-full w-full rounded-lg overflow-hidden border border-border/40 bg-ink shadow-2xl">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/agw-lens-dashboard.png"
+                          alt="AGW Lens dashboard showing ogzulla wallet intelligence — PLATINUM I tier, $38K volume, 23K transactions, 109-day vote streak, 44 badges on Abstract Mainnet"
+                          className="h-full w-full object-cover object-top"
+                          loading="lazy"
+                        />
+                        {/* Subtle top fade for browser-bar realism */}
+                        <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-ink/80 to-transparent pointer-events-none" aria-hidden="true" />
                       </div>
                     </div>
-                  </div>
+
+                    {/* Browser-style status bar */}
+                    <div className="absolute inset-x-3 bottom-3 flex items-center justify-between px-3 py-2 rounded-lg border border-border/40 bg-ink/80 backdrop-blur-sm">
+                      <span className="text-[10px] font-mono text-text-secondary uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500/80 animate-pulse" aria-hidden="true" />
+                        agw-lens.xyz
+                      </span>
+                      <span className="text-[10px] font-mono text-accent uppercase tracking-wider">
+                        Live Preview
+                      </span>
+                    </div>
+
+                    {/* Hover overlay — click to visit */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-ink/60 opacity-0 group-hover/visual:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-[#0A0A0B] text-sm font-semibold">
+                        Open Live
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </div>
+                  </motion.a>
                 </div>
               </div>
             </div>
