@@ -1,82 +1,203 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 
-const stats = [
-  { label: "Repositories", value: "23" },
-  { label: "Followers", value: "59" },
-  { label: "Active since", value: "2022" },
-];
+interface GitHubData {
+  public_repos: number;
+  followers: number;
+  contributions: number;
+  top_languages: { name: string; pct: number; color: string }[];
+  featured_repos: {
+    name: string;
+    description: string;
+    language: string;
+    stars: number;
+    html_url: string;
+  }[];
+}
 
-const featuredRepos = [
-  {
-    name: "zulla",
-    description: "Full-stack TypeScript application with modern UI and API integration.",
-    language: "TypeScript",
-    stars: 3,
-    href: "https://github.com/anotherplnt/zulla",
-  },
-  {
-    name: "agentforge",
-    description: "AI agent marketplace built on Arc Network — Ignyte Stable Labs project.",
-    language: "TypeScript",
-    stars: 0,
-    href: "https://github.com/anotherplnt/agentforge",
-  },
-];
+const GH_TOKEN = process.env.GITHUB_TOKEN || "";
+const USERNAME = "anotherplnt";
 
-const languages = [
-  { name: "TypeScript", pct: 49 },
-  { name: "Go", pct: 34 },
-  { name: "Solidity", pct: 12 },
-  { name: "Other", pct: 5 },
-];
+async function fetchGitHub(endpoint: string) {
+  const res = await fetch(`https://api.github.com/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${GH_TOKEN}`,
+      Accept: "application/vnd.github+json",
+    },
+    next: { revalidate: 86400 }, // ISR 24 jam
+  });
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+  return res.json();
+}
 
-export default function GitHub() {
+async function fetchGraphQL(query: string) {
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${GH_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+    next: { revalidate: 86400 },
+  });
+  if (!res.ok) throw new Error(`GitHub GQL error: ${res.status}`);
+  return res.json();
+}
+
+async function getGitHubData(): Promise<GitHubData> {
+  try {
+    // Profile
+    const [profile, repos] = await Promise.all([
+      fetchGitHub(`users/${USERNAME}`),
+      fetchGitHub(`users/${USERNAME}/repos?per_page=100&sort=updated`),
+    ]);
+
+    // Contributions (1 year default)
+    const gql = await fetchGraphQL(`{
+      user(login: "${USERNAME}") {
+        contributionsCollection {
+          contributionCalendar { totalContributions }
+        }
+      }
+    }`);
+
+    // Language breakdown
+    const langTotals: Record<string, number> = {};
+    for (const repo of repos) {
+      try {
+        const langs = await fetchGitHub(`repos/${USERNAME}/${repo.name}/languages`);
+        for (const [lang, bytes] of Object.entries(langs)) {
+          langTotals[lang] = (langTotals[lang] || 0) + (bytes as number);
+        }
+      } catch {}
+    }
+
+    const total = Object.values(langTotals).reduce((a, b) => a + b, 0);
+    const sorted = Object.entries(langTotals)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 4);
+
+    const langColors: Record<string, string> = {
+      TypeScript: "#3178c6",
+      JavaScript: "#f1e05a",
+      Python: "#3572A5",
+      Go: "#00ADD8",
+      Solidity: "#363636",
+      Rust: "#dea584",
+    };
+
+    const top_languages = sorted.map(([name, bytes]) => ({
+      name,
+      pct: Math.round((bytes / total) * 100),
+      color: langColors[name] || "#6e7681",
+    }));
+
+    // Normalize "Other" for remaining languages
+    const shown = top_languages.reduce((s, l) => s + l.pct, 0);
+    if (shown < 100 && top_languages.length > 0) {
+      top_languages.push({ name: "Other", pct: 100 - shown, color: "#6e7681" });
+    }
+
+    // Featured repos (top 2 by stars)
+    const featured_repos = repos
+      .sort(
+        (a: any, b: any) =>
+          (b.stargazers_count || 0) - (a.stargazers_count || 0)
+      )
+      .slice(0, 2)
+      .map((r: any) => ({
+        name: r.name,
+        description: r.description || "",
+        language: r.language || "TypeScript",
+        stars: r.stargazers_count || 0,
+        html_url: r.html_url,
+      }));
+
+    return {
+      public_repos: profile.public_repos,
+      followers: profile.followers,
+      contributions:
+        gql?.data?.user?.contributionsCollection?.contributionCalendar
+          ?.totalContributions || 37,
+      top_languages,
+      featured_repos,
+    };
+  } catch {
+    // Fallback ke data terakhir yang valid
+    return {
+      public_repos: 23,
+      followers: 59,
+      contributions: 37,
+      top_languages: [
+        { name: "TypeScript", pct: 49, color: "#3178c6" },
+        { name: "Go", pct: 34, color: "#00ADD8" },
+        { name: "Solidity", pct: 12, color: "#363636" },
+        { name: "Other", pct: 5, color: "#6e7681" },
+      ],
+      featured_repos: [
+        {
+          name: "zulla",
+          description:
+            "Full-stack TypeScript application with modern UI and API integration.",
+          language: "TypeScript",
+          stars: 3,
+          html_url: "https://github.com/anotherplnt/zulla",
+        },
+        {
+          name: "agentforge",
+          description:
+            "AI agent marketplace built on Arc Network — Ignyte Stable Labs project.",
+          language: "TypeScript",
+          stars: 0,
+          html_url: "https://github.com/anotherplnt/agentforge",
+        },
+      ],
+    };
+  }
+}
+
+export default async function GitHub() {
+  const data = await getGitHubData();
+
+  const year = new Date().getFullYear();
+
   return (
-    <section id="github" className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl"
-      >
+    <section
+      id="github"
+      className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32"
+    >
+      <div className="max-w-2xl">
         <p className="text-sm font-medium uppercase tracking-widest text-accent">
           Open Source
         </p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Building in public
         </h2>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-12 rounded-2xl border border-line bg-surface p-8 transition-colors sm:p-10"
-      >
+      <div className="mt-12 rounded-2xl border border-line bg-surface p-8 transition-colors sm:p-10">
         {/* Profile header */}
         <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-5">
             <Image
-              src="https://avatars.githubusercontent.com/u/113736954?v=4"
-              alt="anotherplnt GitHub avatar"
+              src={`https://avatars.githubusercontent.com/u/113736954?v=4&s=128`}
+              alt={`${USERNAME} GitHub avatar`}
               width={64}
               height={64}
               className="rounded-2xl border border-line"
               unoptimized
             />
             <div>
-              <p className="font-mono text-lg font-semibold text-white">anotherplnt</p>
-              <p className="mt-1 text-sm text-neutral-400">Full Stack Developer</p>
+              <p className="font-mono text-lg font-semibold text-white">
+                {USERNAME}
+              </p>
+              <p className="mt-1 text-sm text-neutral-400">
+                Full Stack Developer
+              </p>
             </div>
           </div>
 
           <a
-            href="https://github.com/anotherplnt"
+            href={`https://github.com/${USERNAME}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-line bg-ink px-5 py-2.5 text-sm font-semibold text-neutral-200 transition-colors hover:border-accent/40 hover:text-white"
@@ -87,15 +208,39 @@ export default function GitHub() {
         </div>
 
         {/* Stats grid */}
-        <div className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-ink px-4 py-6 text-center">
-              <p className="font-mono text-2xl font-semibold text-white sm:text-3xl">{stat.value}</p>
-              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
+          <div className="bg-ink px-4 py-6 text-center">
+            <p className="font-mono text-2xl font-semibold text-white sm:text-3xl">
+              {data.public_repos}
+            </p>
+            <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500">
+              Repositories
+            </p>
+          </div>
+          <div className="bg-ink px-4 py-6 text-center">
+            <p className="font-mono text-2xl font-semibold text-white sm:text-3xl">
+              {data.followers}
+            </p>
+            <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500">
+              Followers
+            </p>
+          </div>
+          <div className="bg-ink px-4 py-6 text-center">
+            <p className="font-mono text-2xl font-semibold text-white sm:text-3xl">
+              {data.contributions}
+            </p>
+            <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500">
+              Contributions
+            </p>
+          </div>
+          <div className="bg-ink px-4 py-6 text-center">
+            <p className="font-mono text-2xl font-semibold text-white sm:text-3xl">
+              2022
+            </p>
+            <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500">
+              Active since
+            </p>
+          </div>
         </div>
 
         {/* Language bar */}
@@ -106,39 +251,23 @@ export default function GitHub() {
             </p>
           </div>
           <div className="mt-3 flex h-2 w-full overflow-hidden rounded-full bg-ink">
-            {languages.map((lang) => (
+            {data.top_languages.map((lang) => (
               <div
                 key={lang.name}
                 className="h-full"
-                style={{
-                  width: `${lang.pct}%`,
-                  backgroundColor:
-                    lang.name === "TypeScript"
-                      ? "#3178c6"
-                      : lang.name === "Go"
-                        ? "#00ADD8"
-                        : lang.name === "Solidity"
-                          ? "#363636"
-                          : "#6e7681",
-                }}
+                style={{ width: `${lang.pct}%`, backgroundColor: lang.color }}
               />
             ))}
           </div>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-            {languages.map((lang) => (
-              <div key={lang.name} className="flex items-center gap-2 text-xs text-neutral-400">
+            {data.top_languages.map((lang) => (
+              <div
+                key={lang.name}
+                className="flex items-center gap-2 text-xs text-neutral-400"
+              >
                 <span
                   className="h-2.5 w-2.5 rounded-sm"
-                  style={{
-                    backgroundColor:
-                      lang.name === "TypeScript"
-                        ? "#3178c6"
-                        : lang.name === "Go"
-                          ? "#00ADD8"
-                          : lang.name === "Solidity"
-                            ? "#363636"
-                            : "#6e7681",
-                  }}
+                  style={{ backgroundColor: lang.color }}
                 />
                 {lang.name}
                 <span className="text-neutral-600">{lang.pct}%</span>
@@ -153,10 +282,10 @@ export default function GitHub() {
             Featured Repositories
           </p>
           <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {featuredRepos.map((repo) => (
+            {data.featured_repos.map((repo) => (
               <a
                 key={repo.name}
-                href={repo.href}
+                href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group rounded-xl border border-line bg-ink p-5 transition-all duration-200 hover:border-neutral-700"
@@ -166,21 +295,37 @@ export default function GitHub() {
                     {repo.name}
                   </p>
                   <div className="flex items-center gap-1 text-xs text-neutral-500">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                     {repo.stars}
                   </div>
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-neutral-400">{repo.description}</p>
+                <p className="mt-2 text-xs leading-relaxed text-neutral-400">
+                  {repo.description}
+                </p>
                 <div className="mt-3 flex items-center gap-2">
                   <span
                     className="h-2.5 w-2.5 rounded-full"
-                  style={{
-                    backgroundColor: repo.language === "TypeScript" ? "#3178c6" : "#00ADD8",
-                  }}
+                    style={{
+                      backgroundColor:
+                        repo.language === "TypeScript"
+                          ? "#3178c6"
+                          : repo.language === "Go"
+                            ? "#00ADD8"
+                            : repo.language === "Solidity"
+                              ? "#363636"
+                              : "#6e7681",
+                    }}
                   />
-                  <span className="text-xs text-neutral-500">{repo.language}</span>
+                  <span className="text-xs text-neutral-500">
+                    {repo.language}
+                  </span>
                 </div>
               </a>
             ))}
@@ -188,9 +333,10 @@ export default function GitHub() {
         </div>
 
         <p className="mt-8 text-sm leading-relaxed text-neutral-400">
-          Actively building and shipping in public. Follow along to see what&apos;s in progress.
+          Actively building and shipping in public. Follow along to see
+          what&apos;s in progress.
         </p>
-      </motion.div>
+      </div>
     </section>
   );
 }
