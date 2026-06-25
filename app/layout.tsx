@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://zulla.site"),
   title: "Jugia Jabar — Full Stack Developer",
   description:
-    "Full Stack Developer building modern web applications, backend systems, automation workflows, and AI-powered features. From idea to deployment.",
+    "Full Stack Developer building modern web applications, backend systems, and automation workflows. From idea to deployment.",
   keywords: [
     "Jugia Jabar",
     "Full Stack Developer",
@@ -33,16 +33,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Jugia Jabar" }],
   openGraph: {
-    title: "Jugia Jabar — AI Builder & Full Stack Developer",
+    title: "Jugia Jabar — Full Stack Developer",
     description:
-      "Building AI-powered products, automation systems, and scalable web applications.",
+      "Building modern web applications, backend systems, and automation workflows from idea to deployment.",
     type: "website",
     siteName: "Jugia Jabar",
   },
   twitter: {
     card: "summary_large_image",
     creator: "@ogzulla",
-    title: "Jugia Jabar — AI Builder & Full Stack Developer",
+    title: "Jugia Jabar — Full Stack Developer",
   },
 };
 
