@@ -34,11 +34,38 @@ const socials = [
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.name || !form.email || !form.message) return
+
+    setStatus('submitting')
+    try {
+      const response = await fetch('https://formspree.io/f/xqevpkry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      if (response.ok) {
+        setStatus('success')
+        setForm({ name: '', email: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch (err) {
+      setStatus('error')
+    }
   }
 
   return (
@@ -59,8 +86,7 @@ export default function Contact() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           {/* Form */}
           <form
-            action="#"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
             className="lg:col-span-3"
           >
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -72,10 +98,12 @@ export default function Contact() {
                   id="name"
                   name="name"
                   type="text"
+                  required
+                  disabled={status === 'submitting' || status === 'success'}
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Your name"
-                  className="rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40"
+                  className="rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40 disabled:opacity-50"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -86,10 +114,12 @@ export default function Contact() {
                   id="email"
                   name="email"
                   type="email"
+                  required
+                  disabled={status === 'submitting' || status === 'success'}
                   value={form.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40"
+                  className="rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40 disabled:opacity-50"
                 />
               </div>
             </div>
@@ -102,22 +132,39 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={6}
+                required
+                disabled={status === 'submitting' || status === 'success'}
                 value={form.message}
                 onChange={handleChange}
                 placeholder="Tell me about your project..."
-                className="resize-none rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40"
+                className="resize-none rounded-lg border border-line bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40 disabled:opacity-50"
               />
             </div>
 
-            <button
-              type="submit"
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent/50"
-            >
-              Send Message
-              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                disabled={status === 'submitting' || status === 'success'}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent/50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+
+              {status === 'success' && (
+                <span className="text-sm font-medium text-emerald-500 animate-fade-in">
+                  ✓ Form sent successfully! I&apos;ll get back to you soon.
+                </span>
+              )}
+
+              {status === 'error' && (
+                <span className="text-sm font-medium text-rose-500">
+                  ✗ Failed to send. Please email me directly instead.
+                </span>
+              )}
+            </div>
           </form>
 
           {/* Contact info */}
