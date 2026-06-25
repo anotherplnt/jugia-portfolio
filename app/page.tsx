@@ -10,19 +10,20 @@ import Projects from '@/components/Projects'
 import GitHub from '@/components/GitHub'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import Reveal from '@/components/Reveal'
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-ink text-text-primary antialiased">
       <Navbar />
       <Hero />
-      <About />
-      <Services />
-      <Skills />
-      <Process />
-      <Projects />
-      <GitHub />
-      <Contact />
+      <Reveal><About /></Reveal>
+      <Reveal><Services /></Reveal>
+      <Reveal><Skills /></Reveal>
+      <Reveal><Process /></Reveal>
+      <Reveal><Projects /></Reveal>
+      <Reveal><GitHub /></Reveal>
+      <Reveal><Contact /></Reveal>
       <Footer />
     </main>
   )
