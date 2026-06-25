@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Preloader from '@/components/Preloader'
 import ScrollProgress from '@/components/ScrollProgress'
@@ -16,32 +17,42 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
 export default function Page() {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 2200)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key="page"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="min-h-screen bg-[#0A0A0B] text-text-primary"
-      >
-        <Preloader />
-        <ScrollProgress />
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Experience />
-          <Projects />
-          <Skills />
-          <CryptoJourney />
-          <CurrentlyBuilding />
-          <Philosophy />
-          <Contact />
-        </main>
-        <Footer />
-      </motion.div>
-    </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">
+        {loading && <Preloader key="preloader" />}
+      </AnimatePresence>
+
+      {!loading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="min-h-screen bg-[#0A0A0B] text-text-primary"
+        >
+          <ScrollProgress />
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Experience />
+            <Projects />
+            <Skills />
+            <CryptoJourney />
+            <CurrentlyBuilding />
+            <Philosophy />
+            <Contact />
+          </main>
+          <Footer />
+        </motion.div>
+      )}
+    </>
   )
 }
