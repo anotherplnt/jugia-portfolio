@@ -97,16 +97,22 @@ async function getGitHubData(): Promise<GitHubData> {
       top_languages.push({ name: "Other", pct: 100 - shown, color: "#6e7681" });
     }
 
-    // Featured repos (top 2 by stars)
-    const featured_repos = repos
-      .sort(
-        (a: any, b: any) =>
-          (b.stargazers_count || 0) - (a.stargazers_count || 0)
-      )
-      .slice(0, 2)
+    // Featured repos — manually whitelisted (avoid self-referential portfolio repo + ensure quality)
+    const featuredWhitelist = ["zulla", "agentforge"];
+    const featuredDescriptions: Record<string, string> = {
+      zulla: "Full-stack TypeScript application with modern UI and API integration.",
+      agentforge: "AI agent marketplace built on Arc Network — Ignyte Stable Labs.",
+    };
+
+    const featured_repos = featuredWhitelist
+      .map((name) => repos.find((r: any) => r.name === name))
+      .filter(Boolean)
       .map((r: any) => ({
         name: r.name,
-        description: r.description || "",
+        description:
+          featuredDescriptions[r.name] ||
+          r.description ||
+          "Open-source project.",
         language: r.language || "TypeScript",
         stars: r.stargazers_count || 0,
         html_url: r.html_url,
@@ -145,7 +151,7 @@ async function getGitHubData(): Promise<GitHubData> {
         {
           name: "agentforge",
           description:
-            "AI agent marketplace built on Arc Network — Ignyte Stable Labs project.",
+            "AI agent marketplace built on Arc Network — Ignyte Stable Labs.",
           language: "TypeScript",
           stars: 0,
           html_url: "https://github.com/anotherplnt/agentforge",
