@@ -1,11 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const stats = [
-  { label: "Repositories", value: "24" },
-  { label: "Contributions", value: "1.2k" },
-  { label: "Followers", value: "48" },
+  { label: "Repositories", value: "23" },
+  { label: "Followers", value: "59" },
+  { label: "Active since", value: "2022" },
+];
+
+const featuredRepos = [
+  {
+    name: "zulla",
+    description: "Full-stack TypeScript application with modern UI and API integration.",
+    language: "TypeScript",
+    stars: 3,
+    href: "https://github.com/anotherplnt/zulla",
+  },
+  {
+    name: "agentforge",
+    description: "AI agent marketplace built on Arc Network — Ignyte Stable Labs project.",
+    language: "TypeScript",
+    stars: 0,
+    href: "https://github.com/anotherplnt/agentforge",
+  },
+];
+
+const languages = [
+  { name: "TypeScript", pct: 49 },
+  { name: "Go", pct: 34 },
+  { name: "Solidity", pct: 12 },
+  { name: "Other", pct: 5 },
 ];
 
 export default function GitHub() {
@@ -19,7 +44,7 @@ export default function GitHub() {
         className="max-w-2xl"
       >
         <p className="text-sm font-medium uppercase tracking-widest text-accent">
-          Open Source &amp; Contributions
+          Open Source
         </p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Building in public
@@ -31,15 +56,19 @@ export default function GitHub() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="group mt-12 rounded-2xl border border-line bg-surface p-8 transition-all duration-300 hover:border-neutral-700 sm:p-10"
+        className="mt-12 rounded-2xl border border-line bg-surface p-8 transition-colors sm:p-10"
       >
+        {/* Profile header */}
         <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-5">
-            <div className="flex h-16 w-16 flex-none items-center justify-center rounded-2xl border border-line bg-ink text-neutral-200">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.52 11.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-              </svg>
-            </div>
+            <Image
+              src="https://avatars.githubusercontent.com/u/113736954?v=4"
+              alt="anotherplnt GitHub avatar"
+              width={64}
+              height={64}
+              className="rounded-2xl border border-line"
+              unoptimized
+            />
             <div>
               <p className="font-mono text-lg font-semibold text-white">anotherplnt</p>
               <p className="mt-1 text-sm text-neutral-400">Full Stack Developer</p>
@@ -57,6 +86,7 @@ export default function GitHub() {
           </a>
         </div>
 
+        {/* Stats grid */}
         <div className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
           {stats.map((stat) => (
             <div key={stat.label} className="bg-ink px-4 py-6 text-center">
@@ -68,7 +98,96 @@ export default function GitHub() {
           ))}
         </div>
 
-        <p className="mt-7 text-sm leading-relaxed text-neutral-400">
+        {/* Language bar */}
+        <div className="mt-8">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-medium uppercase tracking-widest text-neutral-500">
+              Top Languages
+            </p>
+          </div>
+          <div className="mt-3 flex h-2 w-full overflow-hidden rounded-full bg-ink">
+            {languages.map((lang) => (
+              <div
+                key={lang.name}
+                className="h-full"
+                style={{
+                  width: `${lang.pct}%`,
+                  backgroundColor:
+                    lang.name === "TypeScript"
+                      ? "#3178c6"
+                      : lang.name === "Go"
+                        ? "#00ADD8"
+                        : lang.name === "Solidity"
+                          ? "#363636"
+                          : "#6e7681",
+                }}
+              />
+            ))}
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+            {languages.map((lang) => (
+              <div key={lang.name} className="flex items-center gap-2 text-xs text-neutral-400">
+                <span
+                  className="h-2.5 w-2.5 rounded-sm"
+                  style={{
+                    backgroundColor:
+                      lang.name === "TypeScript"
+                        ? "#3178c6"
+                        : lang.name === "Go"
+                          ? "#00ADD8"
+                          : lang.name === "Solidity"
+                            ? "#363636"
+                            : "#6e7681",
+                  }}
+                />
+                {lang.name}
+                <span className="text-neutral-600">{lang.pct}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured repos */}
+        <div className="mt-8">
+          <p className="text-xs font-medium uppercase tracking-widest text-neutral-500">
+            Featured Repositories
+          </p>
+          <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {featuredRepos.map((repo) => (
+              <a
+                key={repo.name}
+                href={repo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-xl border border-line bg-ink p-5 transition-all duration-200 hover:border-neutral-700"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="font-mono text-sm font-semibold text-white transition-colors group-hover:text-accent">
+                    {repo.name}
+                  </p>
+                  <div className="flex items-center gap-1 text-xs text-neutral-500">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    {repo.stars}
+                  </div>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-neutral-400">{repo.description}</p>
+                <div className="mt-3 flex items-center gap-2">
+                  <span
+                    className="h-2.5 w-2.5 rounded-full"
+                  style={{
+                    backgroundColor: repo.language === "TypeScript" ? "#3178c6" : "#00ADD8",
+                  }}
+                  />
+                  <span className="text-xs text-neutral-500">{repo.language}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <p className="mt-8 text-sm leading-relaxed text-neutral-400">
           Actively building and shipping in public. Follow along to see what&apos;s in progress.
         </p>
       </motion.div>
