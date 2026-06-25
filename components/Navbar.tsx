@@ -27,8 +27,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-ink/80 backdrop-blur-xl border-b border-border/40"
+        scrolled || open
+          ? "bg-ink/90 backdrop-blur-xl border-b border-border/40"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -76,7 +76,7 @@ export default function Navbar() {
             open ? "max-h-96 pb-4" : "max-h-0"
           }`}
         >
-          <div className="flex flex-col gap-1 pt-2 border-t border-border/40">
+          <div className="flex flex-col gap-1 pt-2 border-t border-border/40 bg-ink/95 backdrop-blur-xl -mx-6 px-6 pb-2">
             {links.map((l) => (
               <Link
                 key={l.href}
