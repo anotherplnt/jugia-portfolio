@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 
 const highlights = [
-  "Full Stack Development",
-  "Backend Architecture",
-  "Automation Systems",
-  "Cloud Infrastructure",
-  "API Design",
+  "Next.js & TypeScript",
+  "On-Chain Analytics",
+  "AI Agent Platforms",
+  "Automation Infrastructure",
+  "EVM & Smart Contracts",
 ];
 
 export default function Hero() {
@@ -29,17 +29,17 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 text-2xl sm:text-3xl text-zinc-300 tracking-tight font-medium">
-            Full Stack Developer
+            Full-Stack & Web3 Automation Engineer
           </p>
 
           <p className="mt-6 text-lg text-zinc-400 leading-relaxed max-w-2xl">
-            Building modern web applications, backend systems, and automation
-            workflows from idea to deployment.
+            I build on-chain analytics platforms, AI agent infrastructure, and
+            automation systems that ship to production and stay there.
           </p>
 
           <p className="mt-4 text-base text-zinc-500 leading-relaxed max-w-2xl">
-            I help businesses and startups transform ideas into scalable,
-            reliable, and user-friendly digital products.
+            Currently shipping AGW Lens (Abstract wallet intelligence) and
+            Agentforge (AI agent marketplace on Arc Network).
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">

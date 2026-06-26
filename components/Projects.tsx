@@ -118,17 +118,38 @@ export default function Projects() {
         </div>
       </div>
 
-      <p className="mt-12 text-sm text-neutral-500">
-        More projects coming soon —{" "}
-        <a
-          href="https://github.com/anotherplnt"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-neutral-300 underline-offset-4 transition-colors hover:text-accent hover:underline"
-        >
-          follow on GitHub
-        </a>
-        .
+      {/* SECONDARY — agentforge */}
+      <div className="mt-10 rounded-2xl border border-line bg-surface/40 p-6 sm:p-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3">
+              <h3 className="text-xl font-semibold tracking-tight text-white">Agentforge</h3>
+              <span className="rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent">
+                Arc Network
+              </span>
+            </div>
+            <p className="mt-3 text-base leading-relaxed text-neutral-400">
+              An AI agent marketplace built for the Ignyte Stablecoin Commerce
+              Stack. On-chain agent identity, verifiable execution, and
+              stablecoin-settled transactions.
+            </p>
+          </div>
+          <a
+            href="https://agentforge-roan.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-none items-center gap-1.5 rounded-lg border border-line bg-ink px-5 py-2.5 text-sm font-semibold text-neutral-200 transition-colors hover:border-accent/40 hover:text-white"
+          >
+            View Live
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+      </div>
+
+      <p className="mt-12 max-w-2xl text-sm leading-relaxed text-neutral-500">
+        Alongside these, I maintain a private suite of operational tooling:
+        wallet automation, on-chain monitoring agents, and VPS-deployed bots
+        running in production.
       </p>
     </section>
   );

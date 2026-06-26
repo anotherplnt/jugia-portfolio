@@ -60,9 +60,9 @@ async function getGitHubData(): Promise<GitHubData> {
       }
     }`);
 
-    // Language breakdown
+    // Language breakdown (own repos only — forks inflate stats)
     const langTotals: Record<string, number> = {};
-    for (const repo of repos) {
+    for (const repo of repos.filter((r: any) => !r.fork)) {
       try {
         const langs = await fetchGitHub(`repos/${USERNAME}/${repo.name}/languages`);
         for (const [lang, bytes] of Object.entries(langs)) {
@@ -128,16 +128,16 @@ async function getGitHubData(): Promise<GitHubData> {
       featured_repos,
     };
   } catch {
-    // Fallback ke data terakhir yang valid
+    // Fallback if GitHub API fails — values reflect own (non-fork) repos
     return {
       public_repos: 23,
       followers: 59,
       contributions: 37,
       top_languages: [
-        { name: "TypeScript", pct: 49, color: "#3178c6" },
-        { name: "Go", pct: 34, color: "#00ADD8" },
-        { name: "Solidity", pct: 12, color: "#363636" },
-        { name: "Other", pct: 5, color: "#6e7681" },
+        { name: "TypeScript", pct: 74, color: "#3178c6" },
+        { name: "JavaScript", pct: 11, color: "#f1e05a" },
+        { name: "Solidity", pct: 9, color: "#363636" },
+        { name: "Other", pct: 6, color: "#6e7681" },
       ],
       featured_repos: [
         {
@@ -197,7 +197,7 @@ export default async function GitHub() {
                 {USERNAME}
               </p>
               <p className="mt-1 text-sm text-neutral-400">
-                Full Stack Developer
+                Web3 Automation Engineer
               </p>
             </div>
           </div>

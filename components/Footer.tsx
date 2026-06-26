@@ -46,7 +46,7 @@ export default function Footer() {
           {/* Left */}
           <div className="text-center md:text-left">
             <p className="text-sm font-semibold text-text-primary">Jugia Jabar</p>
-            <p className="mt-1 text-sm text-text-muted">Full Stack Developer</p>
+            <p className="mt-1 text-sm text-text-muted">Web3 Automation Engineer</p>
           </div>
 
           {/* Center nav */}
@@ -82,7 +82,7 @@ export default function Footer() {
         <div className="my-10 h-px w-full bg-line" />
 
         <p className="text-center text-xs text-text-muted">
-          © 2026 Jugia Jabar. Built with Next.js &amp; TailwindCSS.
+          © 2026 Jugia Jabar. All rights reserved.
         </p>
       </div>
     </footer>
