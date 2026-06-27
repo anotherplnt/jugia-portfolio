@@ -8,13 +8,15 @@ import GitHub from '@/components/GitHub'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import Reveal from '@/components/Reveal'
+import Preloader from '@/components/Preloader'
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-ink text-text-primary antialiased">
+      <Preloader />
       <Navbar />
       <Hero />
-      <Reveal><About /></Reveal>
+      <About />
       <Reveal><Services /></Reveal>
       <Reveal><Skills /></Reveal>
       <Reveal><Projects /></Reveal>

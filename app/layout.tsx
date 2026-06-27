@@ -17,14 +17,17 @@ const display = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zulla.site"),
-  title: "Jugia Jabar — Full Stack Developer",
+  title: "Jugia Jabar · Full-Stack & Web3 Automation Engineer",
   description:
-    "Full Stack Developer building modern web applications, backend systems, and automation workflows. From idea to deployment.",
+    "Full-Stack and Web3 Automation Engineer building on-chain analytics, AI agent platforms, EVM integrations, and automation systems that run unattended in production.",
   keywords: [
     "Jugia Jabar",
     "Full Stack Developer",
-    "Web Developer",
-    "Backend Developer",
+    "Web3 Developer",
+    "Web3 Automation Engineer",
+    "Smart Contracts",
+    "EVM",
+    "Solidity",
     "Next.js",
     "React",
     "Node.js",
@@ -33,16 +36,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Jugia Jabar" }],
   openGraph: {
-    title: "Jugia Jabar — Full Stack Developer",
+    title: "Jugia Jabar · Full-Stack & Web3 Automation Engineer",
     description:
-      "Building modern web applications, backend systems, and automation workflows from idea to deployment.",
+      "On-chain analytics, AI agent platforms, EVM integrations, and automation systems that run unattended in production.",
     type: "website",
     siteName: "Jugia Jabar",
   },
   twitter: {
     card: "summary_large_image",
     creator: "@ogzulla",
-    title: "Jugia Jabar — Full Stack Developer",
+    title: "Jugia Jabar · Full-Stack & Web3 Automation Engineer",
   },
 };
 
