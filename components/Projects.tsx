@@ -96,7 +96,7 @@ export default function Projects() {
 
         {/* RIGHT — screenshot */}
         <div className="lg:col-span-2">
-          <div className="overflow-hidden rounded-2xl border border-line shadow-2xl shadow-black/40">
+          <div className="card-lift overflow-hidden rounded-2xl border border-line shadow-2xl shadow-black/40">
             <Image
               src="/images/agw-lens-dashboard.png"
               alt="AGW Lens dashboard"
@@ -195,7 +195,7 @@ export default function Projects() {
 
         {/* RIGHT — screenshot */}
         <div className="lg:col-span-2">
-          <div className="overflow-hidden rounded-2xl border border-line shadow-2xl shadow-black/40">
+          <div className="card-lift overflow-hidden rounded-2xl border border-line shadow-2xl shadow-black/40">
             <Image
               src="/images/agentforge-hero.png"
               alt="Agentforge AI Agent Marketplace on Arc Network"
