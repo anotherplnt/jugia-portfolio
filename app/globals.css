@@ -4,6 +4,17 @@
 
 :root {
   color-scheme: dark;
+
+  /* motion tokens — one vocabulary for every transition on the site.
+     curves + durations sourced from transitions.dev so timing stays
+     consistent instead of every component inventing its own ms value. */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);   /* decelerate, the workhorse */
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1); /* slight overshoot for pops */
+  --dur-quick: 150ms;
+  --dur-fast: 250ms;
+  --dur-medium: 350ms;
+  --dur-slow: 420ms;
+  --blur-motion: 4px;
 }
 
 * {
@@ -88,11 +99,45 @@ body {
   from {
     opacity: 0;
     transform: translateY(26px);
+    filter: blur(var(--blur-motion));
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
+}
+
+/* Hero entrance — runs once on load, staggered by --i per child.
+   No scroll timeline (it's above the fold), so plain animation-delay. */
+.hero-in > * {
+  opacity: 0;
+  animation: hero-rise var(--dur-slow) var(--ease-smooth) forwards;
+  animation-delay: calc(120ms + var(--i, 0) * 90ms);
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(var(--blur-motion));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Card lift — for project screenshots. Smooth-out curve, gentle rise. */
+.card-lift {
+  transition:
+    transform var(--dur-medium) var(--ease-smooth),
+    box-shadow var(--dur-medium) var(--ease-smooth);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -106,6 +151,10 @@ body {
   }
   /* reduced motion: force visible, no animation */
   .reveal {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .hero-in > * {
     opacity: 1 !important;
     animation: none !important;
   }
