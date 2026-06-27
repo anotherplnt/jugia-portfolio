@@ -21,9 +21,9 @@ const services = [
   },
   {
     icon: Sparkles,
-    title: "AI Feature Integration",
+    title: "Web3 & Automation",
     description:
-      "Integrating AI-powered capabilities into existing products and workflows.",
+      "On-chain integrations, EVM tooling, and AI-driven automation that runs unattended in production.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function Services() {
           </h2>
           <p className="mt-4 text-zinc-400 leading-relaxed">
             A focused set of services covering the full lifecycle of building
-            digital products — from initial architecture to production.
+            digital products, from initial architecture to production.
           </p>
         </div>
 

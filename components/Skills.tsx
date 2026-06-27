@@ -9,7 +9,7 @@ const categories: SkillCategory[] = [
   {
     title: "Frontend Development",
     description: "Crafting fast, accessible interfaces with modern frameworks.",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "TailwindCSS", "Framer Motion"],
+    skills: ["React", "Next.js", "TypeScript", "JavaScript", "TailwindCSS", "Radix UI"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="3" width="20" height="14" rx="2" />
@@ -52,11 +52,21 @@ const categories: SkillCategory[] = [
   {
     title: "Cloud & Infrastructure",
     description: "Deploying and scaling apps across modern cloud platforms.",
-    skills: ["AWS", "Docker", "Linux", "VPS", "Cloudflare", "Vercel"],
+    skills: ["Linux", "Docker", "VPS", "Cloudflare", "Vercel", "systemd"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 18a4 4 0 0 0 .5-7.97A6 6 0 1 0 6.5 14" />
         <path d="M8 18l4 4 4-4M12 22v-9" />
+      </svg>
+    ),
+  },
+  {
+    title: "Web3 & On-Chain",
+    description: "Building and integrating with EVM chains and smart contracts.",
+    skills: ["Solidity", "ethers.js", "viem", "EVM", "Wallet Automation", "RPC"],
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2l8 4.5v9L12 22l-8-6.5v-9L12 2zM12 2v20M4 6.5l8 4.5 8-4.5" />
       </svg>
     ),
   },
@@ -72,7 +82,7 @@ export default function Skills() {
         </h2>
         <p className="mt-4 text-base leading-relaxed text-neutral-400">
           From pixel-perfect frontends to resilient backends and reliable
-          infrastructure — here&apos;s what I work with day to day.
+          infrastructure. Here&apos;s what I work with day to day.
         </p>
       </div>
 

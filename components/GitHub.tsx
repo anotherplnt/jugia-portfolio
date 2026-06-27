@@ -101,7 +101,7 @@ async function getGitHubData(): Promise<GitHubData> {
     const featuredWhitelist = ["zulla", "agentforge"];
     const featuredDescriptions: Record<string, string> = {
       zulla: "Full-stack TypeScript application with modern UI and API integration.",
-      agentforge: "AI agent marketplace built on Arc Network — Ignyte Stable Labs.",
+      agentforge: "AI agent marketplace built on Arc Network for Ignyte Stable Labs.",
     };
 
     const featured_repos = featuredWhitelist
@@ -151,7 +151,7 @@ async function getGitHubData(): Promise<GitHubData> {
         {
           name: "agentforge",
           description:
-            "AI agent marketplace built on Arc Network — Ignyte Stable Labs.",
+            "AI agent marketplace built on Arc Network for Ignyte Stable Labs.",
           language: "TypeScript",
           stars: 0,
           html_url: "https://github.com/anotherplnt/agentforge",

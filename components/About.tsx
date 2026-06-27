@@ -1,17 +1,17 @@
 const badges = [
   "QA Engineering",
   "Full Stack",
+  "Web3 & EVM",
+  "Automation",
   "System Design",
   "DevOps",
-  "Automation",
   "API Design",
-  "Cloud",
 ];
 
 const stats = [
-  { label: "Years building software", value: "5+" },
-  { label: "Production deployments", value: "40+" },
-  { label: "Stack disciplines", value: "End-to-end" },
+  { label: "Building since", value: "2022" },
+  { label: "Public repositories", value: "23" },
+  { label: "Live products", value: "3" },
 ];
 
 export default function About() {
@@ -77,26 +77,26 @@ export default function About() {
           <div className="lg:col-span-7">
             <div className="space-y-6 text-zinc-400 leading-relaxed">
               <p className="text-lg text-zinc-300">
-                I started in Quality Assurance — a foundation that shaped how I
+                I started in Quality Assurance, a foundation that shaped how I
                 approach every line of code today: with rigor, edge-case
                 thinking, and a deep respect for users.
               </p>
               <p>
-                Over the years, I&apos;ve moved across the stack — from frontend
-                interfaces to backend services and infrastructure. I build
-                complete products, not isolated components. That means owning
-                architecture, data models, APIs, deployment pipelines, and the
-                user experience end-to-end.
+                Over time I moved across the stack, from frontend interfaces to
+                backend services and infrastructure. I build complete products,
+                not isolated components: architecture, data models, APIs,
+                deployment pipelines, and the user experience end-to-end.
+              </p>
+              <p>
+                The last two years that focus has expanded into Web3 and agent
+                infrastructure: on-chain analytics, EVM integrations, and
+                automation systems that run unattended in production.
               </p>
               <p>
                 My focus is execution. I ship maintainable systems that survive
-                contact with real users and real load. I optimize for clarity,
-                reliability, and shipping velocity over framework trends.
-              </p>
-              <p>
-                Whether it&apos;s a greenfield SaaS product, a backend overhaul,
-                or modernizing an existing workflow, I treat each project as a
-                system to design — measured by outcomes, not output.
+                contact with real users and real load, and I optimize for
+                clarity, reliability, and shipping velocity over framework
+                trends.
               </p>
             </div>
           </div>

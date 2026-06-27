@@ -77,8 +77,8 @@ export default function Contact() {
             Let&apos;s Build Something Great
           </h2>
           <p className="mt-4 text-base leading-relaxed text-text-secondary">
-            Whether you need a modern website, custom application, backend service,
-            automation workflow, or AI-powered feature — I&apos;d love to hear about
+            Whether you need a modern web app, backend service, on-chain
+            integration, or an automation workflow, I&apos;d love to hear about
             your project.
           </p>
         </div>
