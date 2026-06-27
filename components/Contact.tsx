@@ -161,7 +161,7 @@ export default function Contact() {
 
               {status === 'error' && (
                 <span className="text-sm font-medium text-rose-500">
-                  ✗ Failed to send. Please email me directly instead.
+                  ✗ Failed to send. Please try again or reach me on the socials.
                 </span>
               )}
             </div>
@@ -170,16 +170,6 @@ export default function Contact() {
           {/* Contact info */}
           <div className="lg:col-span-2">
             <div className="rounded-xl border border-line bg-surface p-8">
-              <p className="text-sm font-medium text-text-secondary">Email</p>
-              <a
-                href="mailto:jugiajabar@gmail.com"
-                className="mt-2 block text-base font-medium text-text-primary transition-colors hover:text-accent"
-              >
-                jugiajabar@gmail.com
-              </a>
-
-              <div className="my-8 h-px w-full bg-line" />
-
               <p className="text-sm font-medium text-text-secondary">Connect</p>
               <div className="mt-4 flex flex-col gap-3">
                 {socials.map((s) => (

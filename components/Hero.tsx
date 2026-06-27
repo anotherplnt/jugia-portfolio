@@ -37,11 +37,6 @@ export default function Hero() {
             automation systems that ship to production and stay there.
           </p>
 
-          <p className="mt-4 text-base text-zinc-500 leading-relaxed max-w-2xl">
-            Currently shipping AGW Lens (Abstract wallet intelligence) and
-            Agentforge (AI agent marketplace on Arc Network).
-          </p>
-
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href="#projects"

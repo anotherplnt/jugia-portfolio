@@ -190,15 +190,6 @@ export default function Projects() {
               Live Demo
               <span aria-hidden>→</span>
             </a>
-            <a
-              href="https://github.com/anotherplnt/agentforge"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-transparent px-5 py-2.5 text-sm font-semibold text-neutral-200 transition-colors hover:border-neutral-700 hover:text-white"
-            >
-              GitHub
-              <span aria-hidden>→</span>
-            </a>
           </div>
         </div>
 
