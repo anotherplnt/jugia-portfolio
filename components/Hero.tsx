@@ -25,7 +25,13 @@ export default function Hero() {
       </div>
 
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="hero-in max-w-3xl">
+        {/* monogram — visual anchor, desktop only */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block leading-none">
+          <span className="font-display text-[220px] font-bold tracking-[-0.08em] text-accent">J</span>
+          <span className="font-display text-[220px] font-bold tracking-[-0.08em] text-zinc-100/[0.08] -ml-[0.12em]">J</span>
+        </div>
+
+        <div className="relative hero-in max-w-3xl">
           <div style={{ "--i": 0 } as React.CSSProperties} className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs text-zinc-400 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Open to opportunities
