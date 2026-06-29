@@ -12,9 +12,16 @@ const highlights = [
 export default function Hero() {
   return (
     <section className="relative pt-40 pb-32 overflow-hidden">
-      {/* subtle radial backdrop */}
+      {/* backdrop: grid + grain + ambient glow */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(245,165,36,0.06),transparent_60%)]" />
+        {/* dot grain — subtle texture */}
+        <div className="absolute inset-0 grain opacity-60" />
+        {/* tech grid — Vercel-style */}
+        <div className="absolute inset-0 opacity-[0.12] grid-lines" />
+        {/* left-of-center warm glow */}
+        <div className="absolute left-[40%] top-0 h-[600px] w-[900px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(245,165,36,0.09),transparent_60%)]" />
+        {/* right-side cool accent — subtle depth */}
+        <div className="absolute -right-20 top-[15%] h-[400px] w-[400px] bg-[radial-gradient(ellipse,rgba(100,120,255,0.04),transparent_60%)]" />
       </div>
 
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
